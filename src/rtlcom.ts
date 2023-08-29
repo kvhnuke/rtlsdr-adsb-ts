@@ -304,14 +304,14 @@ class RtlCom {
    * Claims the USB interface.
    */
   async claimInterface() {
-    return this.conn.claimInterface(1);
+    return this.conn.claimInterface(0);
   }
 
   /**
    * Releases the USB interface.
    */
   async releaseInterface() {
-    return this.conn.releaseInterface(1);
+    return this.conn.releaseInterface(0);
   }
 
   /**
