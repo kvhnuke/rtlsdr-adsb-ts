@@ -155,10 +155,10 @@ var _RtlCom = class {
     }
   }
   async claimInterface() {
-    return this.conn.claimInterface(1);
+    return this.conn.claimInterface(0);
   }
   async releaseInterface() {
-    return this.conn.releaseInterface(1);
+    return this.conn.releaseInterface(0);
   }
   async writeEach(array) {
     for (let index = 0; index < array.length; index++) {
