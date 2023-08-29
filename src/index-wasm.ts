@@ -69,6 +69,12 @@ const getWebUSBSDR = (): Promise<WebUSBDevice> => {
       dev.deviceDescriptor.idVendor === VENDOR_ID &&
       dev.deviceDescriptor.idProduct === PRODUCT_ID
     ) {
+      console.log(dev.interfaces);
+      if (dev.interfaces) {
+        dev.interfaces.forEach((i) => {
+          if (i.isKernelDriverActive()) i.detachKernelDriver();
+        });
+      }
       return WebUSBDevice.createInstance(dev);
     }
   }

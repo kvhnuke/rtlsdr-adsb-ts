@@ -735,6 +735,13 @@ var getWebUSBSDR = () => {
   const devices = (0, import_usb.getDeviceList)();
   for (const dev of devices) {
     if (dev.deviceDescriptor.idVendor === VENDOR_ID && dev.deviceDescriptor.idProduct === PRODUCT_ID) {
+      console.log(dev.interfaces);
+      if (dev.interfaces) {
+        dev.interfaces.forEach((i) => {
+          if (i.isKernelDriverActive())
+            i.detachKernelDriver();
+        });
+      }
       return import_usb.WebUSBDevice.createInstance(dev);
     }
   }
