@@ -64,13 +64,11 @@ var getWebUSBSDR = () => {
   const devices = getDeviceList();
   for (const dev of devices) {
     if (dev.deviceDescriptor.idVendor === VENDOR_ID && dev.deviceDescriptor.idProduct === PRODUCT_ID) {
-      console.log(dev.interfaces);
-      if (dev.interfaces) {
-        dev.interfaces.forEach((i) => {
-          if (i.isKernelDriverActive())
-            i.detachKernelDriver();
-        });
-      }
+      dev.open();
+      dev.interfaces.forEach((i) => {
+        if (i.isKernelDriverActive())
+          i.detachKernelDriver();
+      });
       return WebUSBDevice.createInstance(dev);
     }
   }
