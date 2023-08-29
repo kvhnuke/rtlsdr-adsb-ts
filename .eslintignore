@@ -1,1 +1,3 @@
 coverage
+src/wasm-build/*.js
+dis/**/*

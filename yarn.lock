@@ -275,6 +275,11 @@
   resolved "https://registry.yarnpkg.com/@ungap/promise-all-settled/-/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==
 
+"@wasmer/wasi@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@wasmer/wasi/-/wasi-1.2.2.tgz#46689b568100ad3923fb1bee0205ccb01f9c5b80"
+  integrity sha512-39ZB3gefOVhBmkhf7Ta79RRSV/emIV8LhdvcWhP/MOZEjMmtzoZWMzt7phdKj8CUXOze+AwbvGK60lKaKldn1w==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -2443,6 +2448,13 @@ v8-compile-cache-lib@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz#6336e8d71965cb3d35a1bbb7868445a7c05264bf"
   integrity sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==
+
+wasi@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/wasi/-/wasi-0.0.6.tgz#dc262b456c643241194b5669736cb88b2f71039f"
+  integrity sha512-D3f4Q/3LojW1uMloOC1OuFlGy2u22hLqpskAz0OkmoYeWIwVYf8XBuc9ihDGJnNf3lfNvqM4s0030sN0UUXExw==
+  dependencies:
+    bindings "^1.5.0"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
