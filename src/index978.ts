@@ -1,5 +1,4 @@
 /* eslint-disable no-loop-func */
-// @ts-nocheck
 import { createServer, Socket } from "net";
 import { usb, getDeviceList, WebUSBDevice } from "usb";
 import RTL2832U from "./rtl2832u";
@@ -33,7 +32,7 @@ const getWebUSBSDR = (): Promise<WebUSBDevice> => {
 
 getWebUSBSDR().then(async (device) => {
   await device.open();
-  const sdr = new RTL2832U(device, 48);
+  const sdr = new RTL2832U(device, 0.5);
   await sdr.open();
   const actualSampleRate = await sdr.setSampleRate(2083334);
   const actualCenterFrequency = await sdr.setCenterFrequency(978000000);
@@ -69,16 +68,19 @@ getWebUSBSDR().then(async (device) => {
 
   while (readSamples) {
     const samples = await sdr.readSamples(128000);
-    const heapPointer = (malloc as any)(samples.byteLength);
+    const heapPointer = (malloc as (ptr: number) => number)(samples.byteLength);
     const array = new Uint8Array(
       wasmHelper.memory.buffer,
       heapPointer,
       samples.byteLength
     );
     array.set(Buffer.from(samples));
-    (init as any)();
-    (demodulate as any)(array.byteOffset, samples.byteLength);
-    free(heapPointer);
+    (init as () => void)();
+    (demodulate as (offset: number, len: number) => void)(
+      array.byteOffset,
+      samples.byteLength
+    );
+    (free as (ptr: number) => void)(heapPointer);
   }
   readSamples = false;
 });

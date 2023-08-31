@@ -2,8 +2,7 @@
 import { createServer, Socket } from "net";
 import { usb, getDeviceList, WebUSBDevice } from "usb";
 import RTL2832U from "./rtl2832u";
-
-const addon = require("bindings")("demod1090.node");
+import WasmHelper from "./wasm-helper";
 
 const VENDOR_ID = 0x0bda;
 const PRODUCT_ID = 0x2838;
@@ -39,21 +38,41 @@ getWebUSBSDR().then(async (device) => {
   const actualCenterFrequency = await sdr.setCenterFrequency(1090000000);
   console.log("SR", actualSampleRate, "CF", actualCenterFrequency);
 
+  const wasmHelper = new WasmHelper(
+    "src/wasm-build/demod1090.wasm",
+    ["demodulate", "malloc", "free"],
+    134217728
+  );
+
+  const env = {
+    callback: (val: number, len: number) => {
+      const values = new Uint8Array(wasmHelper.memory.buffer);
+      const msg = Buffer.from(values.slice(val, val + len)).toString("hex");
+      console.log(`${msg};`);
+      if (socket) {
+        socket.write(`*${msg};\n\r`);
+      }
+    },
+  };
+  const { demodulate, malloc, free } = await wasmHelper.init(env);
+
   await sdr.resetBuffer();
   let readSamples = true;
 
   while (readSamples) {
     const samples = await sdr.readSamples(128000);
-    addon.Demodulate(
-      Buffer.from(samples),
-      samples.byteLength,
-      (msg: Buffer) => {
-        console.log(`${msg.toString("hex")};`);
-        if (socket) {
-          socket.write(`*${msg.toString("hex").toUpperCase()};\n\r`);
-        }
-      }
+    const heapPointer = (malloc as (ptr: number) => number)(samples.byteLength);
+    const array = new Uint8Array(
+      wasmHelper.memory.buffer,
+      heapPointer,
+      samples.byteLength
     );
+    array.set(Buffer.from(samples));
+    (demodulate as (offset: number, len: number) => void)(
+      array.byteOffset,
+      samples.byteLength
+    );
+    (free as (ptr: number) => void)(heapPointer);
   }
   readSamples = false;
 });

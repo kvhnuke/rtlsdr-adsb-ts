@@ -14,8 +14,8 @@
     "build": "tsup src/index.ts src/index-wasm.ts --format esm,cjs --dts --clean",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "test": "ts-mocha -p tsconfig.json tests/**/*.test.ts",
-    "build:wasmold": "emcc src/c/wasm.c -O3 --no-entry -s WARN_ON_UNDEFINED_SYMBOLS=0 -s WASM=1 -s EXPORTED_FUNCTIONS=\"['_sumArrayInt32']\" -s ALLOW_MEMORY_GROWTH=1 -s MALLOC=emmalloc -o src/wasm-build/hello.wasm",
     "build:gyp": "npx node-gyp rebuild",
+    "build:wasm": "yarn build:wasm:978 && yarn build:wasm:1090",
     "build:wasm:978": "emcc src/c/demod978.c src/c/fec.c src/c/fec/*.c -O2 --no-entry -s WARN_ON_UNDEFINED_SYMBOLS=0 -s WASM=1 -s EXPORTED_FUNCTIONS=\"['_init', '_demodulate', '_malloc', '_free']\" -s ALLOW_MEMORY_GROWTH=1 -s MAXIMUM_MEMORY=128MB -s MALLOC='dlmalloc' -o src/wasm-build/demod978.js",
     "build:wasm:1090": "emcc src/c/demod1090.c src/c/mode-s.c -O2 --no-entry -s WARN_ON_UNDEFINED_SYMBOLS=0 -s WASM=1 -s EXPORTED_FUNCTIONS=\"['_demodulate', '_malloc', '_free']\" -s ALLOW_MEMORY_GROWTH=1 -s MAXIMUM_MEMORY=128MB -s MALLOC='dlmalloc' -o src/wasm-build/demod1090.js"
   },

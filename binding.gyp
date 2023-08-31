@@ -1,10 +1,10 @@
 {
     "targets": [
         {
-            "target_name": "demodulator",
+            "target_name": "demod1090",
             "cflags!": ["-fno-exceptions"],
             "cflags_cc!": ["-fno-exceptions"],
-            "sources": ["src/c/demodulator.c", "src/c/mode-s.c"],
+            "sources": ["src/c/demod1090gyp.c", "src/c/mode-s.c"],
             "include_dirs": [
                 "src/c",
                 "<!(node -e \"require('nan')\")"
