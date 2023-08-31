@@ -676,7 +676,7 @@ var RTL2832U = class {
 var rtl2832u_default = RTL2832U;
 
 // src/index.ts
-var addon = require("bindings")("demodulator.node");
+var addon = require("bindings")("demod1090.node");
 var VENDOR_ID = 3034;
 var PRODUCT_ID = 10296;
 var socket = null;
@@ -688,6 +688,11 @@ var getWebUSBSDR = () => {
   const devices = (0, import_usb.getDeviceList)();
   for (const dev of devices) {
     if (dev.deviceDescriptor.idVendor === VENDOR_ID && dev.deviceDescriptor.idProduct === PRODUCT_ID) {
+      dev.open();
+      dev.interfaces.forEach((i) => {
+        if (i.isKernelDriverActive())
+          i.detachKernelDriver();
+      });
       return import_usb.WebUSBDevice.createInstance(dev);
     }
   }
