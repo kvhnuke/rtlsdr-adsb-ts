@@ -25,6 +25,7 @@
   "dependencies": {
     "@wasmer/wasi": "^1.2.2",
     "bindings": "^1.5.0",
+    "mode-s-decoder": "^1.0.1",
     "nan": "^2.17.0",
     "usb": "^2.9.0"
   },

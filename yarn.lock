@@ -1730,6 +1730,18 @@ mocha@^9.2.0:
     yargs-parser "20.2.4"
     yargs-unparser "2.0.0"
 
+mode-s-decoder@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/mode-s-decoder/-/mode-s-decoder-1.0.1.tgz#ae125f86cd29eeaa7861c5251b76a67a8ae50359"
+  integrity sha512-0mwSsm1e63smeEbCJlJHIIQkJ4JBQHORj2jEtBR8NdSlskSfqFONLkecwgfRVgz6RFeINDHCkz5jrsxmonMaow==
+  dependencies:
+    mode-s-msglen "^1.0.2"
+
+mode-s-msglen@^1.0.2:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/mode-s-msglen/-/mode-s-msglen-1.0.4.tgz#15167d7679c86ceb12178000d86597c633f1fa25"
+  integrity sha512-+3vQaDxgXHcHTCcspd/Yt2TLGPbd4DjSdxs0ynE/qqrDnvQH1pvsdX0S+da8K+XlhhQ/Jr7JAFg5SjcTrEVvwg==
+
 ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
@@ -2448,13 +2460,6 @@ v8-compile-cache-lib@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/v8-compile-cache-lib/-/v8-compile-cache-lib-3.0.1.tgz#6336e8d71965cb3d35a1bbb7868445a7c05264bf"
   integrity sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==
-
-wasi@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/wasi/-/wasi-0.0.6.tgz#dc262b456c643241194b5669736cb88b2f71039f"
-  integrity sha512-D3f4Q/3LojW1uMloOC1OuFlGy2u22hLqpskAz0OkmoYeWIwVYf8XBuc9ihDGJnNf3lfNvqM4s0030sN0UUXExw==
-  dependencies:
-    bindings "^1.5.0"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"

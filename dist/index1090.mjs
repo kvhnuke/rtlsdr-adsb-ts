@@ -2,12 +2,15 @@ import {
   wasm_helper_default
 } from "./chunk-AESVSTEE.mjs";
 import {
+  __require,
   rtl2832u_default
 } from "./chunk-V3U7PJ6R.mjs";
 
 // src/index1090.ts
 import { createServer } from "net";
 import { getDeviceList, WebUSBDevice } from "usb";
+var Decoder = __require("mode-s-decoder");
+var decoder = new Decoder();
 var VENDOR_ID = 3034;
 var PRODUCT_ID = 10296;
 var socket = null;
@@ -31,7 +34,7 @@ var getWebUSBSDR = () => {
 };
 getWebUSBSDR().then(async (device) => {
   await device.open();
-  const sdr = new rtl2832u_default(device, 0.5);
+  const sdr = new rtl2832u_default(device, 45);
   await sdr.open();
   const actualSampleRate = await sdr.setSampleRate(2e6);
   const actualCenterFrequency = await sdr.setCenterFrequency(109e7);
@@ -44,10 +47,12 @@ getWebUSBSDR().then(async (device) => {
   const env = {
     callback: (val, len) => {
       const values = new Uint8Array(wasmHelper.memory.buffer);
-      const msg = Buffer.from(values.slice(val, val + len)).toString("hex");
-      console.log(`${msg};`);
+      const msg = Buffer.from(values.slice(val, val + len));
+      console.log(`${msg.toString("hex")};`);
+      const message = decoder.parse(msg);
+      console.log(message.icao.toString(16), message.callsign);
       if (socket) {
-        socket.write(`*${msg};
+        socket.write(`*${msg.toString("hex")};
 \r`);
       }
     }
@@ -56,7 +61,7 @@ getWebUSBSDR().then(async (device) => {
   await sdr.resetBuffer();
   let readSamples = true;
   while (readSamples) {
-    const samples = await sdr.readSamples(128e3);
+    const samples = await sdr.readSamples(1024);
     const heapPointer = malloc(samples.byteLength);
     const array = new Uint8Array(
       wasmHelper.memory.buffer,
